@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; margin: 2em; background-color: #f0f2f5; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 2em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #1a202c; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .article-title { font-size: 1.5em; font-weight: 600; margin-bottom: 20px; }
+        .section { margin-bottom: 30px; }
+        .sentiment-scores { display: flex; justify-content: space-around; text-align: center; }
+        .score { padding: 15px; border-radius: 6px; }
+        .score-label { font-size: 0.9em; color: #555; }
+        .score-value { font-size: 1.8em; font-weight: 600; }
+        .negative { background-color: #feecf0; color: #e53e3e; }
+        .neutral { background-color: #f7f7f7; color: #718096; }
+        .positive { background-color: #e6fffa; color: #38b2ac; }
+        .compound { background-color: #ebf4ff; color: #4299e1; }
+        .topic { background-color: #f7f7f7; padding: 10px 15px; border-radius: 6px; margin-bottom: 10px; }
+        .topic-keywords { font-size: 1.1em; }
+        .back-link { display: inline-block; margin-top: 2em; padding: 10px 20px; background-color: #718096; color: white; text-decoration: none; border-radius: 6px; }
+        .back-link:hover { background-color: #4a5868; }
+        .article-card {
+        border: 1px solid #e2e8f0;
+        padding: 1.5em;
+        border-radius: 8px;
+        margin-bottom: 1em;
+    }
+    .article-card h3 {
+        margin-top: 0;
+    }
+    .article-card h3 a {
+        text-decoration: none;
+        color: #2d3748;
+    }
+    .article-card h3 a:hover {
+        color: #5c67f2;
+    }
+    .source {
+        font-size: 0.9em;
+        color: #718096;
+        margin-bottom: 1em;
+    }
+    .sentiment-scores-small {
+        display: flex;
+        gap: 10px;
+        font-size: 0.85em;
+    }
+    .score-small {
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+
+        <div class="section">
+            <p class="article-title">{{ article_title }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Sentiment Analysis</h2>
+            <div class="sentiment-scores">
+                <div class="score negative">
+                    <div class="score-label">Negative</div>
+                    <div class="score-value">{{ sentiment.neg|round(3) }}</div>
+                </div>
+                <div class="score neutral">
+                    <div class="score-label">Neutral</div>
+                    <div class="score-value">{{ sentiment.neu|round(3) }}</div>
+                </div>
+                <div class="score positive">
+                    <div class="score-label">Positive</div>
+                    <div class="score-value">{{ sentiment.pos|round(3) }}</div>
+                </div>
+                <div class="score compound">
+                    <div class="score-label">Compound</div>
+                    <div class="score-value">{{ sentiment.compound|round(3) }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Extracted Topics</h2>
+            {% if topics %}
+                {% for topic in topics %}
+                    <div class="topic">
+                        <p class="topic-keywords">{{ topic.keywords | join(', ') }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No distinct topics could be extracted from this article.</p>
+            {% endif %}
+        </div>
+
+        
+<div class="section">
+    <h2>Alternative Articles</h2>
+    {% if alternative_articles %}
+        {% for article in alternative_articles %}
+            <div class="article-card">
+                <h3><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h3>
+                <p class="source"><strong>Source:</strong> {{ article.source }} | <strong>Published:</strong> {{ article.publishedAt }}</p>
+                
+                {% if article.sentiment %}
+                    <div class="sentiment-scores-small">
+                        <div class="score-small negative">Neg: {{ article.sentiment.neg|round(2) }}</div>
+                        <div class="score-small neutral">Neu: {{ article.sentiment.neu|round(2) }}</div>
+                        <div class="score-small positive">Pos: {{ article.sentiment.pos|round(2) }}</div>
+                        <div class="score-small compound"><strong>Comp: {{ article.sentiment.compound|round(2) }}</strong></div>
+                    </div>
+                {% else %}
+                    <p>Could not analyze sentiment for this article.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No alternative articles could be found for the extracted topics.</p>
+    {% endif %}
+</div>
+
+
+        <a href="/" class="back-link">Analyze Another Article</a>
+    </div>
+</body>
+</html>

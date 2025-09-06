@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alternative News Analyzer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+        }
+        input[type="url"] {
+            width: 70%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="url"]:focus {
+            outline: none;
+            border-color: #5c67f2;
+        }
+        button {
+            padding: 12px 25px;
+            border: none;
+            background-color: #5c67f2;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+            position: relative; 
+        }
+        button:hover {
+            background-color: #4a54d4;
+        }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #5c67f2;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: auto;
+        }
+        button.loading .button-text {
+            visibility: hidden;
+        }
+        button.loading .loader {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Alternative News Perspectives</h1>
+        <p>Enter the URL of a news article to see how the story is told from different viewpoints.</p>
+        
+        <form id="url-form" action="/analyze" method="post">
+            <input type="url" name="url" placeholder="https://..." required>
+            <button type="submit" id="analyze-button">
+                <span class="button-text">Analyze</span>
+                <div class="loader"></div>
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('url-form').addEventListener('submit', function() {
+            const button = document.getElementById('analyze-button');
+            button.classList.add('loading');
+            button.disabled = true;
+        });
+    </script>
+</body>
+</html>
