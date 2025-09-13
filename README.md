@@ -4,7 +4,7 @@
 
 You can access and use the live version of this application, deployed on Streamlit Community Cloud, here:
 
-**[https://alternative-news-source-hamza.streamlit.app/](https://alternative-news-source-hamza.streamlit.app/)** 
+**[https://alternative-news-analyzer-haroon.streamlit.app/](https://alternative-news-analyzer-haroon.streamlit.app/)** 
 
 ---
 
