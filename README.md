@@ -56,7 +56,7 @@ This project can be run in two modes:
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/Hamza-ijaz504/Alternative-News-Source.git
+    git clone https://github.com/haroonshehzad159/Alternative-News-Analyzer
     ```
 2.  Navigate to the project directory:
     ```bash

@@ -23,12 +23,10 @@ def evaluate_sentiment_accuracy():
     """
     print("--- Starting Sentiment Model Evaluation ---")
     
-    # Make sure NLTK VADER is ready to use
     setup_nltk()
     
     # Load our manually labeled "answer key" dataset from the CSV file
     try:
-        # pandas.read_csv is a powerful function to load data from a CSV
         dataset_df = pd.read_csv('sentiment_test_data.csv')
         print(f"Successfully loaded {len(dataset_df)} sentences from the test file.")
     except FileNotFoundError:
@@ -48,7 +46,6 @@ def evaluate_sentiment_accuracy():
         # Get the sentiment score from our processor.py function
         sentiment_score = analyze_sentiment_from_text(sentence_text)
         
-        # Convert the program's score into a label ('Positive', 'Negative', or 'Neutral')
         program_prediction = get_prediction_label(sentiment_score)
         
         # Check if the program's prediction matches your own label
@@ -66,6 +63,5 @@ def evaluate_sentiment_accuracy():
     
     return accuracy
 
-# This part makes the script run when you execute it from the terminal
 if __name__ == '__main__':
     evaluate_sentiment_accuracy()
